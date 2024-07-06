@@ -13,33 +13,39 @@ body {
 h1 {
   text-align: center;
 }
-
-/* CSS for the file upload form */
 #upload-form {
-  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40px;
 }
 
 label {
   font-weight: bold;
-  margin-left: 660px;
   text-align: center;
+  color: #555;
 }
 
 input[type="file"] {
   margin-top: 5px;
-  margin-left: 660px;
-  display: flex;
+  display: block;
+  width: 300px; 
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
 
 }
 
 button[type="submit"] {
   margin-top: 10px;
-  margin-left: 660px;
   padding: 8px 20px;
   background-color: #007bff;
   color: white;
   border: none;
+  border-radius: 4px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 button[type="submit"]:hover {
@@ -56,10 +62,10 @@ button[type="submit"]:hover {
 .spinner::after {
   content: ' ';
   display: inline-block;
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
-  border: 2px solid #007bff;
+  border: 4px solid #007bff;
   border-color: #007bff transparent #007bff transparent;
   animation: spinner 0.6s linear infinite;
 }
@@ -77,9 +83,11 @@ button[type="submit"]:hover {
 }
 img {
   width: 100%;
-  max-width: 100%;
-  height: auto; 
-  margin-bottom: 10px;
+  max-width: 600px;
+  height: auto;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 .images-container {
   display: flex;
@@ -136,7 +144,7 @@ img {
     <form id="upload-form" onsubmit="handleSubmit(event)">
         <label for="file-upload">Upload Excel File:</label>
         <input type="file" id="file-upload"></input>
-        <button type="submit">Submit</button>
+        <button type="submit">Upload</button>
     </form>
     <div id="spinner" class="spinner"></div>
     <div id="results"></div>  

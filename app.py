@@ -5,6 +5,10 @@ import json
 
 import pandas as pd
 import seaborn as sns 
+import matplotlib
+
+matplotlib.use('Agg')#Use a  not interactive backend  coz it is causing a problem in macOS
+
 import matplotlib.pyplot as plt
 from datetime import datetime
 import openpyxl
@@ -12,11 +16,7 @@ import openpyxl
 from sklearn.preprocessing import StandardScaler
 from sklearn.cluster import KMeans
 
-app=Flask(__name__)
-
-app.config['STATIC_FOLDER'] = 'static'
-app.static_folder = app.config['STATIC_FOLDER']
-app.static_url_path = f'/{app.config["STATIC_FOLDER"]}' 
+app=Flask(__name__) 
 
 model =load('model.joblib')
 
@@ -83,27 +83,37 @@ def predict():
         segmented_df,scaled_df=load_and_preprocess(file_path)
         segmented_df['Cluster']=model.predict(scaled_df)
 
+        plt.ion()
         plt.figure(figsize=(10,10))
         sns.boxplot(x='Cluster',y='Amount', data= segmented_df,hue='Cluster')
         amount_img_path = 'static/Cluster_Amount.png'
+        os.makedirs(os.path.dirname(amount_img_path), exist_ok=True)
         plt.savefig(amount_img_path)
         plt.clf()
+        plt.ioff()
 
+        plt.ion()
         plt.figure(figsize=(10,10))
         sns.boxplot(x='Cluster',y='Frequency', data= segmented_df,hue='Cluster')
         freq_img_path = 'static/Cluster_Frequency.png'
+        os.makedirs(os.path.dirname(freq_img_path), exist_ok=True)
         plt.savefig(freq_img_path)
         plt.clf()
-
+        plt.ioff()
+        
+        plt.ion()
         plt.figure(figsize=(10,10))
         sns.boxplot(x='Cluster',y='Most_Recent_Engagement', data= segmented_df,hue='Cluster')
         recency_img_path = 'static/Cluster_Recency.png'
+        os.makedirs(os.path.dirname(recency_img_path), exist_ok=True)
         plt.savefig(recency_img_path)
         plt.clf()
+        plt.ioff()
+
         response = {'amount_img': amount_img_path,
             'freq_img': freq_img_path,
             'recency_img': recency_img_path}
-        return jsonify.dumps(response)
+        return json.dumps(response)
 
     except Exception as e:
         raise jsonify({'error':str(e)})
