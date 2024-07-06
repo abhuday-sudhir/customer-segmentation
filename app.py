@@ -16,7 +16,9 @@ import openpyxl
 from sklearn.preprocessing import StandardScaler
 from sklearn.cluster import KMeans
 
-app=Flask(__name__) 
+application=Flask(__name__) 
+
+app=application
 
 model =load('model.joblib')
 
